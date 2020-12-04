@@ -14,17 +14,26 @@ import { AppLoading } from "expo";
 import { useFonts } from "expo-font";
 import firebase from "firebase";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBVJemfjD5-wOxFiT9TfeXHqFBAAnYUZM0",
-  authDomain: "filmapp-bb7d3.firebaseapp.com",
-  databaseURL: "https://filmapp-bb7d3.firebaseio.com",
-  projectId: "filmapp-bb7d3",
-  storageBucket: "filmapp-bb7d3.appspot.com",
-  messagingSenderId: "643933918059",
-  appId: "1:643933918059:web:2c716c24ed6c0ad039722e",
-};
+try {
+  firebase.initializeApp({
+    apiKey: "AIzaSyBVJemfjD5-wOxFiT9TfeXHqFBAAnYUZM0",
+    authDomain: "filmapp-bb7d3.firebaseapp.com",
+    databaseURL: "https://filmapp-bb7d3.firebaseio.com",
+    projectId: "filmapp-bb7d3",
+    storageBucket: "filmapp-bb7d3.appspot.com",
+    messagingSenderId: "643933918059",
+    appId: "1:643933918059:web:2c716c24ed6c0ad039722e",
+  });
+} catch (err) {
+  // we skip the "already exists" message which is
+  // not an actual error when we're hot-reloading
+  if (!/already exists/.test(err.message)) {
+    console.error("Firebase initialization error raised", err.stack);
+  }
+}
+const firebaseApp = firebase;
 
-firebase.initializeApp(firebaseConfig);
+//firebase.initializeApp(firebaseConfig);
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -46,15 +55,19 @@ export default function App() {
             text: "FilmApp",
             style: { color: "#fff", fontFamily: "Montserrat", fontSize: 25 },
           }}
+          containerStyle={{
+            backgroundColor: "#7E4139",
+            justifyContent: "space-around",
+          }}
         />
       </View>
-      <Tab.Navigator style={{ height: 500 }}>
+      <Tab.Navigator barStyle={{ backgroundColor: "#fff" }}>
         <Tab.Screen
           name="Home"
           component={HomeStack}
           options={{
             tabBarIcon: () => (
-              <Icon name="home" style="round" size={25} color="#CDCCCE" />
+              <Icon name="home" style="round" size={25} color="#7E4139" />
             ),
           }}
         />
@@ -62,7 +75,7 @@ export default function App() {
           name="Reviews"
           component={ReviewScreen}
           options={{
-            tabBarIcon: () => <Icon name="edit" size={25} color="#CDCCCE" />,
+            tabBarIcon: () => <Icon name="edit" size={25} color="#7E4139" />,
           }}
         />
         <Tab.Screen
@@ -70,7 +83,7 @@ export default function App() {
           component={ProfileScreen}
           options={{
             tabBarIcon: () => (
-              <Icon name="perm-identity" size={25} color="#CDCCCE" />
+              <Icon name="perm-identity" size={25} color="#7E4139" />
             ),
           }}
         />
@@ -84,7 +97,7 @@ const HomeStack = () => {
       <Stack.Screen
         name="Home"
         component={HomeScreen}
-        hidden={true} //nämä piilottavat stackin nimen ruudulta
+        hidden={true} //these hide the stack name from screen
         options={{ headerShown: false }}
       />
       <Stack.Screen

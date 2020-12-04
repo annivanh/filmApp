@@ -11,6 +11,7 @@ import {
 import { Input, Button, ListItem, Icon } from "react-native-elements";
 import { AppLoading } from "expo";
 import { useFonts } from "expo-font";
+import firebase from "firebase";
 
 export default function HomeScreen({ navigation }) {
   const [film, setFilm] = useState("");
@@ -23,6 +24,23 @@ export default function HomeScreen({ navigation }) {
       .then((responseJson) => {
         setFilmInfo(responseJson.results);
       });
+  };
+  useEffect(() => {
+    firebase
+      .database()
+      .ref("favourites/")
+      .on("value", (snapshot) => {
+        const data = snapshot.val();
+        const fave = Object.values(data);
+        setFavouriteList(fave);
+      });
+  }, []);
+
+  const saveFavourite = (item) => {
+    firebase
+      .database()
+      .ref("favourites/")
+      .push({ filmTitle: title, description: description });
   };
 
   const [loaded] = useFonts({
@@ -40,7 +58,7 @@ export default function HomeScreen({ navigation }) {
         style={{
           height: 1,
           width: "80%",
-          backgroundColor: "#CED0CE",
+          backgroundColor: "#C38D86",
           marginLeft: "10%",
         }}
       />
@@ -59,7 +77,11 @@ export default function HomeScreen({ navigation }) {
           onChangeText={(film) => setFilm(film)}
           style={{ width: 100 }}
         />
-        <Button title="Search" onPress={findFilm} />
+        <Button
+          title="Search"
+          onPress={findFilm}
+          buttonStyle={{ backgroundColor: "#C38D86" }}
+        />
       </View>
       <FlatList
         ItemSeparatorComponent={listSeparator}
@@ -72,13 +94,13 @@ export default function HomeScreen({ navigation }) {
               source={{ uri: item.image }}
             />
             <ListItem.Content>
-              <ListItem.Title>
+              <ListItem.Title style={{ marginBottom: 20 }}>
                 {item.title}, {item.description}
               </ListItem.Title>
               <ListItem.Subtitle>
-                <Icon name="favorite" size={40} color="#b20000" />
                 <Button
                   title="Review"
+                  buttonStyle={{ width: 150, backgroundColor: "#C38D86" }}
                   onPress={() =>
                     navigation.navigate("WriteReview", {
                       filmTitle: item.title,

@@ -15,7 +15,6 @@ export default function ReviewScreen({ navigation }) {
 
   useEffect(() => {
     readUserData();
-    console.log("hello");
   }, []);
 
   const readUserData = () => {
@@ -34,7 +33,7 @@ export default function ReviewScreen({ navigation }) {
         style={{
           height: 1,
           width: "80%",
-          backgroundColor: "#CED0CE",
+          backgroundColor: "#C38D86",
           marginLeft: "10%",
         }}
       />

@@ -42,16 +42,25 @@ export default function WriteReviewScreen({ route, navigation }) {
     <View>
       <Text style={styles.headline}>Write a review</Text>
       <View style={styles.form}>
+        <Text style={styles.text}>Film: {filmTitle}</Text>
         <TextInput
-          style={{ borderWidth: 1, width: "80%", height: 30, marginBottom: 10 }}
+          style={{
+            borderWidth: 1,
+            borderRadius: 5,
+            borderColor: "#C38D86",
+            width: "80%",
+            height: 30,
+            marginBottom: 10,
+          }}
           placeholder="Write the headline of your review here"
           onChangeText={(headline) => setHeadline(headline)}
           value={headline}
         />
-        <Text>Film: {filmTitle}</Text>
         <TextInput
           style={{
             borderWidth: 1,
+            borderRadius: 5,
+            borderColor: "#C38D86",
             width: "80%",
             height: 30,
             marginBottom: 10,
@@ -64,6 +73,8 @@ export default function WriteReviewScreen({ route, navigation }) {
         <TextInput
           style={{
             borderWidth: 1,
+            borderRadius: 5,
+            borderColor: "#C38D86",
             width: "80%",
             height: 200,
             marginBottom: 10,
@@ -74,7 +85,7 @@ export default function WriteReviewScreen({ route, navigation }) {
           value={reviewText}
         />
         <Button
-          style={{ width: 150 }}
+          buttonStyle={{ width: 150, backgroundColor: "#C38D86" }}
           title="Save review"
           onPress={saveReview}
         />
@@ -98,5 +109,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     margin: 20,
+  },
+  text: {
+    fontSize: 20,
   },
 });
