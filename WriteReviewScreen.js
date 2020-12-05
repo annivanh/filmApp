@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Button } from "react-native-elements";
 import * as SQLite from "expo-sqlite";
+import HomeScreen from "./HomeScreen";
 import firebase from "firebase";
 
 export default function WriteReviewScreen({ route, navigation }) {

@@ -12,11 +12,32 @@ import { Input, Button, ListItem, Icon } from "react-native-elements";
 import { AppLoading } from "expo";
 import { useFonts } from "expo-font";
 import firebase from "firebase";
+import { NavigationContainer } from "@react-navigation/native";
+/*
+try {
+  firebase.initializeApp({
+    apiKey: "AIzaSyBVJemfjD5-wOxFiT9TfeXHqFBAAnYUZM0",
+    authDomain: "filmapp-bb7d3.firebaseapp.com",
+    databaseURL: "https://filmapp-bb7d3.firebaseio.com",
+    projectId: "filmapp-bb7d3",
+    storageBucket: "filmapp-bb7d3.appspot.com",
+    messagingSenderId: "643933918059",
+    appId: "1:643933918059:web:2c716c24ed6c0ad039722e",
+  });
+} catch (err) {
+  // we skip the "already exists" message which is
+  // not an actual error when we're hot-reloading
+  if (!/already exists/.test(err.message)) {
+    console.error("Firebase initialization error raised", err.stack);
+  }
+}
+const firebaseApp = firebase;
+*/
+//firebase.initializeApp(firebaseConfig);
 
 export default function HomeScreen({ navigation }) {
   const [film, setFilm] = useState("");
   const [filmInfo, setFilmInfo] = useState([]);
-  const [favouriteList, setFavouriteList] = useState([]);
 
   const findFilm = () => {
     fetch(`https://imdb-api.com/en/API/Search/k_705mewlf/${film}`)
@@ -24,23 +45,6 @@ export default function HomeScreen({ navigation }) {
       .then((responseJson) => {
         setFilmInfo(responseJson.results);
       });
-  };
-  useEffect(() => {
-    firebase
-      .database()
-      .ref("favourites/")
-      .on("value", (snapshot) => {
-        const data = snapshot.val();
-        const fave = Object.values(data);
-        setFavouriteList(fave);
-      });
-  }, []);
-
-  const saveFavourite = (item) => {
-    firebase
-      .database()
-      .ref("favourites/")
-      .push({ filmTitle: title, description: description });
   };
 
   const [loaded] = useFonts({
@@ -115,6 +119,38 @@ export default function HomeScreen({ navigation }) {
     </View>
   );
 }
+
+const BottomNavi = () => {
+  return (
+    <Tab.Navigator barStyle={{ backgroundColor: "#fff" }}>
+      <Tab.Screen
+        name="HomeScreen"
+        component={HomeStack}
+        options={{
+          tabBarIcon: () => (
+            <Icon name="home" style="round" size={25} color="#7E4139" />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Reviews"
+        component={ReviewScreen}
+        options={{
+          tabBarIcon: () => <Icon name="edit" size={25} color="#7E4139" />,
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          tabBarIcon: () => (
+            <Icon name="perm-identity" size={25} color="#7E4139" />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
