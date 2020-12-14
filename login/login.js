@@ -1,6 +1,6 @@
 // components/login.js
 
-import React, { Component } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -17,90 +17,68 @@ const Image = {
   uri:
     "https://images.pexels.com/photos/3709371/pexels-photo-3709371.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
 };
-export default class Login extends Component {
-  constructor() {
-    super();
-    this.state = {
-      email: "",
-      password: "",
-      isLoading: false,
-    };
-  }
+export default function Login({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  updateInputVal = (val, prop) => {
-    const state = this.state;
-    state[prop] = val;
-    this.setState(state);
-  };
-
-  userLogin = () => {
-    if (this.state.email === "" && this.state.password === "") {
+  const userLogin = () => {
+    if (email === "" && password === "") {
       Alert.alert("Enter details to signin!");
     } else {
-      this.setState({
+      setIsLoading({
         isLoading: true,
       });
       firebase
         .auth()
-        .signInWithEmailAndPassword(this.state.email, this.state.password)
+        .signInWithEmailAndPassword(email, password)
         .then((res) => {
           console.log(res);
           console.log("User logged-in successfully!");
-          this.setState({
+          setIsLoading({
             isLoading: false,
+          });
+          setEmail({
             email: "",
+          });
+          setPassword({
             password: "",
           });
-          this.props.navigation.navigate("Home");
-        })
-        .catch((error) => this.setState({ errorMessage: error.message }));
+          navigation.replace("Home");
+        });
     }
   };
 
-  render() {
-    if (this.state.isLoading) {
-      return (
-        <View style={styles.preloader}>
-          <ActivityIndicator size="large" color="#9E9E9E" />
-        </View>
-      );
-    }
-    return (
-      <View style={styles.container}>
-        <ImageBackground source={Image} style={styles.image}>
-          <Text style={styles.headline}>Log in</Text>
-          <View style={styles.loginContainer}>
-            <TextInput
-              style={styles.inputStyle}
-              placeholder="Email"
-              value={this.state.email}
-              onChangeText={(val) => this.updateInputVal(val, "email")}
-            />
-            <TextInput
-              style={styles.inputStyle}
-              placeholder="Password"
-              value={this.state.password}
-              onChangeText={(val) => this.updateInputVal(val, "password")}
-              maxLength={15}
-              secureTextEntry={true}
-            />
-            <Button
-              color="#7E4139"
-              title="Signin"
-              onPress={() => this.userLogin()}
-            />
+  return (
+    <View style={styles.container}>
+      <ImageBackground source={Image} style={styles.image}>
+        <Text style={styles.headline}>Log in</Text>
+        <View style={styles.loginContainer}>
+          <TextInput
+            style={styles.inputStyle}
+            placeholder="Email"
+            value={String(email)}
+            onChangeText={(email) => setEmail(email)}
+          />
+          <TextInput
+            style={styles.inputStyle}
+            placeholder="Password"
+            value={String(password)}
+            onChangeText={(password) => setPassword(password)}
+            maxLength={15}
+          />
+          <Button color="#7E4139" title="Signin" onPress={() => userLogin()} />
 
-            <Text
-              style={styles.loginText}
-              onPress={() => this.props.navigation.navigate("Signup")}
-            >
-              Don't have account? Click here to signup
-            </Text>
-          </View>
-        </ImageBackground>
-      </View>
-    );
-  }
+          <Text
+            style={styles.loginText}
+            onPress={() => navigation.navigate("Signup")}
+          >
+            Don't have account? Click here to signup
+          </Text>
+        </View>
+      </ImageBackground>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

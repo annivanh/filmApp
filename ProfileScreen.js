@@ -25,13 +25,27 @@ export default class ProfileScreen extends Component {
   render() {
     this.state = {
       displayName: firebase.auth().currentUser.displayName,
+      email: firebase.auth().currentUser.email,
       uid: firebase.auth().currentUser.uid,
     };
     return (
       <View style={styles.container}>
-        <Profile />
+        <View style={{ flexDirection: "row", marginTop: 15 }}>
+          <Avatar.Image
+            source={require("./assets/blank-profile.png")}
+            size={80}
+            margin={20}
+          />
+          <View margin={20}>
+            <Title style={styles.title}>{this.state.displayName}</Title>
+            <Caption>{this.state.email}</Caption>
+          </View>
+        </View>
         <Button
-          buttonStyle={{ width: 150, backgroundColor: "#C38D86" }}
+          buttonStyle={{
+            width: 150,
+            backgroundColor: "#C38D86",
+          }}
           title="Logout"
           onPress={() => this.signOut()}
         />
@@ -40,38 +54,18 @@ export default class ProfileScreen extends Component {
   }
 }
 
-const Profile = () => {
-  return (
-    <SafeAreaView>
-      <View>
-        <View style={{ flexDirection: "row", marginTop: 15 }}>
-          <Avatar.Image
-            source={require("./assets/blank-profile.png")}
-            size={80}
-            margin={20}
-          />
-          <View margin={20}>
-            <Title>Anni</Title>
-            <Caption>av@email.com</Caption>
-          </View>
-        </View>
-        <Text>Edit Profile</Text>
-      </View>
-    </SafeAreaView>
-  );
-};
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     display: "flex",
-    justifyContent: "center",
     alignItems: "center",
-    padding: 35,
     backgroundColor: "#fff",
   },
   textStyle: {
     fontSize: 15,
     marginBottom: 20,
+  },
+  title: {
+    fontFamily: "Montserrat",
   },
 });

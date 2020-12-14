@@ -93,7 +93,6 @@ export default class Signup extends Component {
               value={this.state.password}
               onChangeText={(val) => this.updateInputVal(val, "password")}
               maxLength={15}
-              secureTextEntry={true}
             />
             <Button
               color="#7E4139"

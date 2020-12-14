@@ -73,10 +73,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   headline: {
-    fontSize: 40,
+    fontSize: 30,
     margin: 10,
     fontFamily: "Montserrat",
-    alignItems: "center",
+    textAlign: "center",
     justifyContent: "center",
   },
 });

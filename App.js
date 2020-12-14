@@ -11,7 +11,6 @@ import ProfileScreen from "./ProfileScreen";
 import WriteReviewScreen from "./WriteReviewScreen";
 import Login from "./login/login";
 import Signup from "./login/signup";
-import Dashboard from "./login/dashboard";
 import { Icon, Header } from "react-native-elements";
 import { AppLoading } from "expo";
 import { useFonts } from "expo-font";
@@ -42,7 +41,7 @@ export default function App() {
           }}
         />
       </View>
-      <Stack.Navigator initialRouteName="Signup">
+      <Stack.Navigator>
         <Stack.Screen
           name="Signup"
           component={Signup}
@@ -68,9 +67,9 @@ export default function App() {
 
 function User() {
   return (
-    <Tab.Navigator barStyle={{ backgroundColor: "#fff" }}>
+    <Tab.Navigator barStyle={{ backgroundColor: "#fff", height: "10%" }}>
       <Tab.Screen
-        name="HomeScreen"
+        name="Home"
         component={HomeStack}
         options={{
           tabBarIcon: () => (
