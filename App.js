@@ -5,7 +5,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./HomeScreen";
-import FavouritesScreen from "./FavouritesScreen";
 import ReviewScreen from "./ReviewScreen";
 import ProfileScreen from "./ProfileScreen";
 import WriteReviewScreen from "./WriteReviewScreen";
@@ -101,16 +100,16 @@ const HomeStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="HomeScreen"
+        name="Search"
         component={HomeScreen}
         hidden={true} //these hide the stack name from screen
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="WriteReview"
+        name="Write a review"
         component={WriteReviewScreen}
         hidden={true}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerTintColor: "#000000" }}
       />
     </Stack.Navigator>
   );

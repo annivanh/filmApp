@@ -37,11 +37,13 @@ export default function WriteReviewScreen({ route, navigation }) {
       filmTitle: filmTitle,
       reviewText: reviewText,
     });
+    setHeadline("");
+    setRating("");
+    setReviewText("");
   };
 
   return (
-    <View>
-      <Text style={styles.headline}>Write a review</Text>
+    <View style={styles.container}>
       <View style={styles.form}>
         <Text style={styles.text}>Film: {filmTitle}</Text>
         <TextInput
@@ -100,10 +102,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   headline: {
-    fontSize: 40,
+    fontSize: 30,
     margin: 10,
     fontFamily: "Montserrat",
-    alignItems: "center",
+    textAlign: "center",
     justifyContent: "center",
   },
   form: {

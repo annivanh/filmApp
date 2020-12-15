@@ -66,7 +66,7 @@ export default function HomeScreen({ navigation }) {
                   title="Review"
                   buttonStyle={{ width: 150, backgroundColor: "#C38D86" }}
                   onPress={() =>
-                    navigation.navigate("WriteReview", {
+                    navigation.navigate("Write a review", {
                       filmTitle: item.title,
                     })
                   }
