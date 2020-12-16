@@ -49,19 +49,19 @@ export default function Signup({ navigation }) {
           <TextInput
             style={styles.inputStyle}
             placeholder="Name"
-            value={displayName}
+            value={String(displayName)}
             onChangeText={(displayName) => setDisplayName(displayName)}
           />
           <TextInput
             style={styles.inputStyle}
             placeholder="Email"
-            value={email}
+            value={String(email)}
             onChangeText={(email) => setEmail(email)}
           />
           <TextInput
             style={styles.inputStyle}
             placeholder="Password"
-            value={password}
+            value={String(password)}
             onChangeText={(password) => setPassword(password)}
             maxLength={15}
           />
@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-
     backgroundColor: "#fff",
   },
   image: {

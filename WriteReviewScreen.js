@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  View,
-  TextInput,
-  FlatList,
-} from "react-native";
+import { StyleSheet, Text, View, TextInput } from "react-native";
 import { Button } from "react-native-elements";
-import * as SQLite from "expo-sqlite";
-import HomeScreen from "./HomeScreen";
 import firebase from "firebase";
 
 export default function WriteReviewScreen({ route, navigation }) {
@@ -101,19 +92,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-  headline: {
-    fontSize: 30,
-    margin: 10,
-    fontFamily: "Montserrat",
-    textAlign: "center",
-    justifyContent: "center",
-  },
   form: {
     alignItems: "center",
     justifyContent: "center",
     margin: 20,
   },
   text: {
-    fontSize: 20,
+    fontSize: 18,
+    marginBottom: 10,
   },
 });

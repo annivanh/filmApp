@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  View,
-  TextInput,
-  FlatList,
-} from "react-native";
-import { Button, ListItem, Icon } from "react-native-elements";
+import { StyleSheet, Text, View, FlatList } from "react-native";
+import { ListItem, Icon } from "react-native-elements";
 import firebase from "firebase";
 
-export default function ReviewScreen({ navigation }) {
+export default function ReviewScreen() {
   const [fullReview, setFullReview] = useState([]);
 
   useEffect(() => {
@@ -22,7 +15,6 @@ export default function ReviewScreen({ navigation }) {
       .database()
       .ref("reviews/")
       .on("value", function (snapshot) {
-        console.log(snapshot.val());
         setFullReview(snapshot.val());
       });
   };

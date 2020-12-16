@@ -33,8 +33,6 @@ export default function Login({ navigation }) {
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then((res) => {
-          console.log(res);
-          console.log("User logged-in successfully!");
           setIsLoading({
             isLoading: false,
           });
