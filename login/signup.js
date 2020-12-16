@@ -1,6 +1,4 @@
-// components/signup.js
-
-import React, { Component } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -18,99 +16,71 @@ const Image = {
     "https://images.pexels.com/photos/3709371/pexels-photo-3709371.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
 };
 
-export default class Signup extends Component {
-  constructor() {
-    super();
-    this.state = {
-      displayName: "",
-      email: "",
-      password: "",
-      isLoading: false,
-    };
-  }
+export default function Signup({ navigation }) {
+  const [displayName, setDisplayName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  updateInputVal = (val, prop) => {
-    const state = this.state;
-    state[prop] = val;
-    this.setState(state);
-  };
-
-  registerUser = () => {
-    if (this.state.email === "" && this.state.password === "") {
-      Alert.alert("Enter details to signup!");
+  const registerUser = () => {
+    if (email === "" && password === "") {
+      Alert.alert("Enter details to sign up!");
     } else {
-      this.setState({
-        isLoading: true,
-      });
       firebase
         .auth()
-        .createUserWithEmailAndPassword(this.state.email, this.state.password)
+        .createUserWithEmailAndPassword(email, password)
         .then((res) => {
           res.user.updateProfile({
-            displayName: this.state.displayName,
+            displayName: displayName,
           });
           console.log("User registered successfully!");
-          this.setState({
-            isLoading: false,
-            displayName: "",
-            email: "",
-            password: "",
-          });
-          this.props.navigation.navigate("Login");
-        })
-        .catch((error) => this.setState({ errorMessage: error.message }));
+          setEmail({ email: "" });
+          setPassword({ password: "" });
+          setDisplayName({ displayName: "" });
+        });
+      navigation.navigate("Login");
     }
   };
 
-  render() {
-    if (this.state.isLoading) {
-      return (
-        <View style={styles.preloader}>
-          <ActivityIndicator size="large" color="#9E9E9E" />
-        </View>
-      );
-    }
-    return (
-      <View style={styles.container}>
-        <ImageBackground source={Image} style={styles.image}>
-          <Text style={styles.headline}>Sign up</Text>
-          <View style={styles.loginContainer}>
-            <TextInput
-              style={styles.inputStyle}
-              placeholder="Name"
-              value={this.state.displayName}
-              onChangeText={(val) => this.updateInputVal(val, "displayName")}
-            />
-            <TextInput
-              style={styles.inputStyle}
-              placeholder="Email"
-              value={this.state.email}
-              onChangeText={(val) => this.updateInputVal(val, "email")}
-            />
-            <TextInput
-              style={styles.inputStyle}
-              placeholder="Password"
-              value={this.state.password}
-              onChangeText={(val) => this.updateInputVal(val, "password")}
-              maxLength={15}
-            />
-            <Button
-              color="#7E4139"
-              title="Signup"
-              onPress={() => this.registerUser()}
-            />
+  return (
+    <View style={styles.container}>
+      <ImageBackground source={Image} style={styles.image}>
+        <Text style={styles.headline}>Sign up</Text>
+        <View style={styles.loginContainer}>
+          <TextInput
+            style={styles.inputStyle}
+            placeholder="Name"
+            value={displayName}
+            onChangeText={(displayName) => setDisplayName(displayName)}
+          />
+          <TextInput
+            style={styles.inputStyle}
+            placeholder="Email"
+            value={email}
+            onChangeText={(email) => setEmail(email)}
+          />
+          <TextInput
+            style={styles.inputStyle}
+            placeholder="Password"
+            value={password}
+            onChangeText={(password) => setPassword(password)}
+            maxLength={15}
+          />
+          <Button
+            color="#7E4139"
+            title="Signup"
+            onPress={() => registerUser()}
+          />
 
-            <Text
-              style={styles.loginText}
-              onPress={() => this.props.navigation.navigate("Login")}
-            >
-              Already Registered? Click here to login
-            </Text>
-          </View>
-        </ImageBackground>
-      </View>
-    );
-  }
+          <Text
+            style={styles.loginText}
+            onPress={() => navigation.navigate("Login")}
+          >
+            Already Registered? Click here to login
+          </Text>
+        </View>
+      </ImageBackground>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
